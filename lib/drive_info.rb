@@ -2,6 +2,7 @@
 
 require 'faraday'
 require 'redis'
+require 'logger'
 require 'faraday-encoding'
 require 'faraday_middleware'
 require 'drive_info/version'
@@ -27,7 +28,8 @@ module DriveInfo
       {
         provider: :gmaps,
         provider_options: {},
-        cache: Cache::Redis.new
+        cache: Cache::Redis.new,
+        debug: false
       }
     end
   end

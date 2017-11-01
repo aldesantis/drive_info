@@ -25,6 +25,7 @@ module DriveInfo
           faraday.response :json, content_type: /\bjson$/, parser_options: { symbolize_names: true }
           faraday.request  :url_encoded
           if base.cache
+            log(:info, 'using cache', base.cache)
             faraday.response :caching, ignore_params: ignored_cache_params do
               base.cache
             end
@@ -32,6 +33,10 @@ module DriveInfo
           faraday.response :encoding
           faraday.adapter Faraday.default_adapter
         end
+      end
+
+      def log(type, *message)
+        base&.log&.send(type, message)
       end
     end
   end

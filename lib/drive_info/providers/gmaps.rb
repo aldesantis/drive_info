@@ -28,6 +28,7 @@ module DriveInfo
       private
 
       def request(url, params)
+        log(:info, 'requesting', url, params)
         connection.get(url, params).body
       end
 
