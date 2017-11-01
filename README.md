@@ -1,8 +1,7 @@
 # DriveInfo
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/drive_info`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+DriveInfo allows you to get drive ETA between 2 locations.
+Its supports multiple providers and cache mechanism.
 
 ## Installation
 
@@ -22,13 +21,89 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+di = DriveInfo.new(
+  provider: :gmaps
+)
 
-## Development
+di.route_time(
+  from: 'from address',
+  to: 'to address',
+  starting_at: Time.now
+)
+#=> 23123 (seconds)
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+## Providers
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+It allows to setup multiple providers, the default one is
+
+Google Maps
+
+If you want to create a custom provider you just need to:
+
+```ruby
+# frozen_string_literal: true
+
+class MyCustomProvider < DriveInfo::Providers::Base
+  def route_time(options)
+    from        = options.fetch(:from)
+    to          = options.fetch(:to)
+    depart_time = options.fetch(:depart_time, Time.now)
+
+    connection.get(url, { from: from, to: to, start_time: depart_time }).body
+  end
+
+  ## Used for cache system to ignore query params on the request
+  def ignored_cache_params
+    ['depart_time']
+  end
+
+  private
+
+  def base_url
+    'https://myserviceapi/'
+  end
+end
+
+require 'my_custom_provider'
+
+DriveInfo.new(provider: :my_custom_provider)
+
+```
+
+## Cache
+
+It allows to setup multiple cache system, the default one is
+
+Redis
+
+If you want to use a different one:
+
+```ruby
+# frozen_string_literal: true
+
+class MyCustomCache
+  attr_reader :store
+
+  def initialize(options = {})
+    @store = {}
+  end
+
+  def write(key, value)
+    store[key] = value
+  end
+
+  def read(key)
+    store[key]
+  end
+end
+
+require 'my_custom_cache'
+
+DriveInfo.new(provider: :my_custom_provider, key: 'XXXX', cache: MyCustomCache.new)
+
+```
 
 ## Contributing
 
