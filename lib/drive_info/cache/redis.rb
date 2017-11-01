@@ -16,7 +16,7 @@ module DriveInfo
       end
 
       def write(key, value)
-        log(:info, 'cache:write', key, value)
+        log(:info, 'cache:write', key)
         marshaled = JSON.generate(value.marshal_dump)
         connection.setex(key, ttl, marshaled)
       end
