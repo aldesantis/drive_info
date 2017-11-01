@@ -36,6 +36,8 @@ module DriveInfo
         case response.fetch(:status)
         when 'OK'
           response.dig(:routes, 0, :legs, 0, :duration, :value).to_i
+        when 'NOT_FOUND'
+          nil
         else
           fail response.fetch(:error_message)
         end

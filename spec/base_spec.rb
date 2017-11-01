@@ -14,6 +14,15 @@ RSpec.describe DriveInfo do
     }
   end
 
+  before do
+    described_class.configure do |config|
+      config.provider = :gmaps
+      config.provider_options = { key: 'test key' }
+      config.cache = nil
+      config.debug = false
+    end
+  end
+
   context 'initializer params' do
     it 'accepts provider' do
       expect(subject.provider).to eq(param[:provider])
