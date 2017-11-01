@@ -14,8 +14,12 @@ module DriveInfo
     private
 
     def adapter
-      klass = Object.const_get("::DriveInfo::Providers::#{provider.to_s.capitalize}")
+      klass = Object.const_get("::DriveInfo::Providers::#{provider_klass}")
       klass.new(self, provider_options)
+    end
+
+    def provider_klass
+      provider.to_s.split('_').collect(&:capitalize).join
     end
   end
 end
