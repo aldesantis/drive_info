@@ -51,6 +51,8 @@ class MyCustomProvider < DriveInfo::Providers::Base
     to          = options.fetch(:to)
     depart_time = options.fetch(:depart_time, Time.now)
 
+    my_custom_api_key = options.fetch(:api_key, nil)
+
     connection.get(url, { from: from, to: to, start_time: depart_time }).body
   end
 
@@ -68,7 +70,9 @@ end
 
 require 'my_custom_provider'
 
-DriveInfo.new(provider: :my_custom_provider)
+DriveInfo.new(provider: :my_custom_provider, provider_options: {
+  api_key: 'test_key'
+})
 
 ```
 
@@ -101,7 +105,7 @@ end
 
 require 'my_custom_cache'
 
-DriveInfo.new(provider: :my_custom_provider, key: 'XXXX', cache: MyCustomCache.new)
+DriveInfo.new(provider: :my_custom_provider, cache: MyCustomCache.new)
 
 ```
 
