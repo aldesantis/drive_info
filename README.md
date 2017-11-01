@@ -38,7 +38,7 @@ di.route_time(
 
 It allows to setup multiple providers, the default one is
 
-Google Maps
+Google Maps (DriveInfo::Providers::Gmaps)
 
 If you want to create a custom provider you just need to:
 
@@ -84,7 +84,7 @@ DriveInfo.new(provider: :my_custom_provider, provider_options: {
 
 It allows to setup multiple cache system, the default one is
 
-Redis
+Redis (DriveInfo::Cache::Redis)
 
 If you want to use a different one:
 
