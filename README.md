@@ -45,26 +45,30 @@ If you want to create a custom provider you just need to:
 ```ruby
 # frozen_string_literal: true
 
-class MyCustomProvider < DriveInfo::Providers::Base
-  def route_time(options)
-    from        = options.fetch(:from)
-    to          = options.fetch(:to)
-    depart_time = options.fetch(:depart_time, Time.now)
+module DriveInfo
+  module Providers
+    class MyCustomProvider < Base
+      def route_time(options)
+        from        = options.fetch(:from)
+        to          = options.fetch(:to)
+        depart_time = options.fetch(:depart_time, Time.now)
 
-    my_custom_api_key = options.fetch(:api_key, nil)
+        my_custom_api_key = options.fetch(:api_key, nil)
 
-    connection.get(url, { from: from, to: to, start_time: depart_time }).body
-  end
+        connection.get(url, { from: from, to: to, start_time: depart_time }).body
+      end
 
-  ## Used for cache system to ignore query params on the request
-  def ignored_cache_params
-    ['depart_time']
-  end
+      ## Used for cache system to ignore query params on the request
+      def ignored_cache_params
+        ['depart_time']
+      end
 
-  private
+      private
 
-  def base_url
-    'https://myserviceapi/'
+      def base_url
+        'https://myserviceapi/'
+      end
+    end
   end
 end
 
