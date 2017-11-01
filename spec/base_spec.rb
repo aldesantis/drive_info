@@ -6,7 +6,10 @@ RSpec.describe DriveInfo do
   let(:param) do
     {
       provider: :gmaps,
-      key: 'test key'
+      provider_options: {
+        key: 'test key'
+      },
+      cache: nil
     }
   end
 
@@ -15,8 +18,12 @@ RSpec.describe DriveInfo do
       expect(subject.provider).to eq(param[:provider])
     end
 
-    it 'accepts key' do
-      expect(subject.key).to eq(param[:key])
+    it 'accepts provider options' do
+      expect(subject.provider_options).to eq(param[:provider_options])
+    end
+
+    it 'accepts cache' do
+      expect(subject.cache).to eq(param[:cache])
     end
   end
 
@@ -30,7 +37,7 @@ RSpec.describe DriveInfo do
 
     before do
       Timecop.freeze(Time.local(1990))
-      param[:key] = nil
+      param[:provider_options][:key] = nil
     end
 
     after { Timecop.return }

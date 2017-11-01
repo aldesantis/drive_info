@@ -16,7 +16,7 @@ module DriveInfo
           departure_time: depart_time.to_i,
           traffic_model: traffic_model,
           mode: mode,
-          key: base.key
+          key: options.fetch(:key, nil)
         )
         parse_response(response)
       end

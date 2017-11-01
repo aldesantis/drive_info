@@ -3,10 +3,11 @@
 module DriveInfo
   module Providers
     class Base
-      attr_reader :base
+      attr_reader :base, :options
 
-      def initialize(base)
+      def initialize(base, options = {})
         @base = base
+        @options = options
       end
 
       def route_time(_)
@@ -23,8 +24,10 @@ module DriveInfo
         @connection ||= Faraday.new(url: base_url) do |faraday|
           faraday.response :json, content_type: /\bjson$/, parser_options: { symbolize_names: true }
           faraday.request  :url_encoded
-          faraday.response :caching, ignore_params: ignored_cache_params do
-            base.cache if base.cache
+          if base.cache
+            faraday.response :caching, ignore_params: ignored_cache_params do
+              base.cache
+            end
           end
           faraday.response :encoding
           faraday.adapter Faraday.default_adapter

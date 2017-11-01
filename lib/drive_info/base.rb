@@ -2,19 +2,19 @@
 
 module DriveInfo
   class Base
-    attr_reader :provider, :key, :cache
+    attr_reader :provider, :cache, :provider_options
 
     def initialize(options = {})
       @provider = options.fetch(:provider, nil)
-      @key      = options.fetch(:key, nil)
       @cache    = options.fetch(:cache, nil)
+      @provider_options = options.fetch(:provider_options, {})
     end
 
     private
 
     def adapter
       klass = Object.const_get("::DriveInfo::Providers::#{provider.to_s.capitalize}")
-      klass.new(self)
+      klass.new(self, provider_options)
     end
   end
 end
