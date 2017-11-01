@@ -9,6 +9,7 @@ RSpec.describe DriveInfo do
       provider_options: {
         key: 'test key'
       },
+      debug: false,
       cache: nil
     }
   end

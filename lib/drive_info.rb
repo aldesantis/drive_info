@@ -18,18 +18,29 @@ require 'drive_info/providers/gmaps'
 # di.route_time(from: 'FROM ADDRESS', to: 'TO ADDRESS', starting_at: Time)
 module DriveInfo
   class << self
+    attr_accessor :provider
+    attr_accessor :provider_options
+    attr_accessor :cache
+    attr_accessor :debug
+
     def new(options = {})
-      Base.new(default_configuration.merge(options))
+      config = default_configuration.merge(options)
+      Base.new(config)
+    end
+
+    def configure
+      yield self
+      true
     end
 
     private
 
     def default_configuration
       {
-        provider: :gmaps,
-        provider_options: {},
-        cache: Cache::Redis.new,
-        debug: false
+        provider: provider || :gmaps,
+        provider_options: provider_options || {},
+        cache: cache,
+        debug: debug || false
       }
     end
   end
