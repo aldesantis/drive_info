@@ -3,11 +3,11 @@
 module DriveInfo
   module Providers
     class Base
-      attr_reader :base, :options
+      attr_reader :base, :provider_options
 
-      def initialize(base, options = {})
+      def initialize(base, provider_options = {})
         @base = base
-        @options = options
+        @provider_options = provider_options
       end
 
       def route_time(_)
