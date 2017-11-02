@@ -11,8 +11,8 @@ module DriveInfo
         mode = options.fetch(:mode, :driving)
 
         response = request('directions/json',
-          origin: from,
-          destination: to,
+          origin: convert_point(from),
+          destination: convert_point(to),
           departure_time: depart_time.to_i,
           traffic_model: traffic_model,
           mode: mode,
@@ -26,6 +26,15 @@ module DriveInfo
       end
 
       private
+
+      def convert_point(point)
+        return point if point.is_a?(String)
+        return point_from_array(point) if point.is_a?(Array)
+      end
+
+      def point_from_array(point)
+        point.join(',').delete(' ')
+      end
 
       def request(url, params)
         log(:info, 'requesting', url, params)
