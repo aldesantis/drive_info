@@ -11,8 +11,6 @@ require 'drive_info/route_time'
 require 'drive_info/cache/redis'
 require 'drive_info/providers/base'
 require 'drive_info/providers/gmaps'
-require 'typhoeus'
-require 'typhoeus/adapters/faraday'
 
 # Drive travel information library
 #
