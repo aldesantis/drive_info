@@ -40,13 +40,13 @@ RSpec.describe DriveInfo do
   describe '#route_time' do
     let(:route_params) do
       {
-        from: '91256 Overseas Hwy, Tavernier, FL 33070, EUA',
-        to: '593 NW 82nd Ave, Hialeah Gardens, FL 33016, EUA',
+        from: 'avenida joão crisostomo',
+        to: 'lx factory'
       }
     end
 
     before do
-      Timecop.freeze(Time.now + 10 * 60 * 60)
+      Timecop.freeze(Time.local(1990))
       param[:provider_options][:key] = nil
     end
 
@@ -54,39 +54,6 @@ RSpec.describe DriveInfo do
 
     it 'calls' do
       result = subject.route_time(route_params)
-      expect(result).not_to eq(nil)
-    end
-  end
-
-  describe '#batch_route_time' do
-    let(:route_params) do
-      {
-        from: '91256 Overseas Hwy, Tavernier, FL 33070, EUA',
-        to: '593 NW 82nd Ave, Hialeah Gardens, FL 33016, EUA',
-      }
-    end
-
-    let(:requests) do
-      [
-        route_params,
-        route_params,
-        {
-          from: 'invalid',
-          to: 'invalid',
-          depart_time: Time.now - 2 * 60 * 60
-        }
-      ]
-    end
-
-    before do
-      Timecop.freeze(Time.now + 10 * 60 * 60)
-      param[:provider_options][:key] = nil
-    end
-
-    after { Timecop.return }
-
-    it 'calls' do
-      result = subject.batch_route_time(requests)
       expect(result).not_to eq(nil)
     end
   end
