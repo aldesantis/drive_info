@@ -14,6 +14,10 @@ module DriveInfo
         fail 'Not implemented'
       end
 
+      def batch_route_time(_)
+        fail 'Not implemented'
+      end
+
       def ignored_cache_params
         fail 'Not implemented'
       end
@@ -31,7 +35,7 @@ module DriveInfo
             end
           end
           faraday.response :encoding
-          faraday.adapter Faraday.default_adapter
+          faraday.adapter :typhoeus
         end
       end
 
