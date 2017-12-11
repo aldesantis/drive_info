@@ -22,23 +22,36 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-di = DriveInfo.new(
-  provider: :gmaps
+di = DriveInfo.new
+
+di.register_provider(
+  :gmaps,
+  DriveInfo::Provider::Gmaps.new
 )
 
-di.route_time(
+di.use_provider(:gmaps)
+
+call = di.route_time(
   from: 'from address',
   to: 'to address',
-  starting_at: Time.now
+  depart_time: Time.now
 )
-#=> 23123 (seconds)
+=> #<DriveInfo::Response:0x00007fa1345ee1d8 @error=nil, @error_message=nil, @value=15905>
+
+call.success?
+=> true
+
+call.value
+=> 15905 (seconds)
 ```
 
 ## Providers
 
-It allows to setup multiple providers, the default one is
+It allows to setup multiple providers and you can change them at runtime.
 
-Google Maps (DriveInfo::Providers::Gmaps)
+The gem provides a default provider which is Gmaps.
+
+DriveInfo::Providers::Gmaps
 
 If you want to create a custom provider you just need to:
 
@@ -47,26 +60,35 @@ If you want to create a custom provider you just need to:
 
 module DriveInfo
   module Providers
-    class MyCustomProvider < Base
+    class MyCustomProvider
+      attr_reader :key
+
+      def initialize(options = {})
+        @key = options[:key]
+      end
+
+      def parse(method, response)
+        # here you define the parsing logic for the method
+        # specified
+
+        if method == :route_time
+          response.fetch(:value)
+        end
+      end
+
       def route_time(options)
-        from        = options.fetch(:from)
-        to          = options.fetch(:to)
-        depart_time = options.fetch(:depart_time, Time.now)
-
-        my_custom_api_key = options.fetch(:api_key, nil)
-
-        connection.get(url, { from: from, to: to, start_time: depart_time }).body
+        RouteTime.request(options.merge(key: key))
       end
 
-      ## Used for cache system to ignore query params on the request
-      def ignored_cache_params
-        ['depart_time']
-      end
+      class RouteTime < ::DriveInfo::Apis::RouteTime
+        def request
+          # you have access to: from, to and depart_time
 
-      private
+          my_custom_api_key = options.fetch(:api_key, nil)
 
-      def base_url
-        'https://myserviceapi/'
+          # you should return a Faraday::Request
+          connection.get('my_custom_url', { from: from, to: to, start_time: depart_time })
+        end
       end
     end
   end
@@ -74,10 +96,13 @@ end
 
 require 'my_custom_provider'
 
-DriveInfo.new(provider: :my_custom_provider, provider_options: {
-  api_key: 'test_key'
-})
+DriveInfo.register_provider(:my_custom_provider,
+  DriveInfo::Providers::MyCustomProvider.new(
+    api_key: 'my_custom_api_key'
+  )
+)
 
+DriveInfo.use_provider(:my_custom_provider)
 ```
 
 ## Cache
@@ -98,10 +123,12 @@ class MyCustomCache
     @store = {}
   end
 
+  # value: Faraday::Response
   def write(key, value)
     store[key] = value
   end
 
+  # O: Faraday::Response
   def read(key)
     store[key]
   end
@@ -109,9 +136,40 @@ end
 
 require 'my_custom_cache'
 
-DriveInfo.new(provider: :my_custom_provider, cache: MyCustomCache.new)
+DriveInfo.register_cache(:my_custom_cache,
+  MyCustomCache.new(
+    other_options: {}
+  )
+)
+
+DriveInfo.use_cache(:my_custom_cache)
 
 ```
+
+## Batch Requests
+
+Support for batch requests has been added on 1.0 version.
+
+In order to make use of them just call your api's passing in a requests array.
+
+Example
+
+```ruby
+  requests = [
+    { from: 'from_location', to: 'to_location', depart_time: '' },
+    { from: 'from_location', to: 'to_location', depart_time: '' }
+  ]
+
+  DriveInfo::Client.new.route_time(requests: requests)
+  => [
+    #<DriveInfo::Response:0x00007fa1345ee1d8 @error=nil, @error_message=nil, @value=15905>,
+    #<DriveInfo::Response:0x00007fa1345ee1d2 @error=nil, @error_message=nil, @value=15905>
+  ]
+```
+
+## Todos
+
+- [ ] Better tests on parallel requests when requests fails
 
 ## Contributing
 

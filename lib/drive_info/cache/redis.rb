@@ -1,44 +1,45 @@
 # frozen_string_literal: true
 
+require 'json'
+
 module DriveInfo
   module Cache
     class Redis
       attr_reader :redis_url
       attr_reader :connection
       attr_reader :ttl
-      attr_reader :logger
 
       def initialize(options = {})
         @redis_url = options[:redis_url] || ENV['REDIS_URL'] || 'redis://127.0.0.1:6379/0'
         @connection = options[:connection] || ::Redis.new(url: redis_url)
         @ttl = options[:ttl] || 20
-        @logger = Logger.new(STDOUT) if options.fetch(:debug, false)
       end
 
       def write(key, value)
-        log(:info, 'cache:write', key)
-        marshaled = JSON.generate(value.marshal_dump)
-        connection.setex(key, ttl, marshaled)
+        data = response_hash(value)
+        connection.setex(key, ttl, JSON.generate(data))
       end
 
       def read(key)
-        log(:info, 'cache:read', key)
         result = connection.get(key)
 
-        unless result
-          log(:info, 'cache:miss', key)
-          return nil
-        end
+        return nil unless result
 
-        parsed = JSON.parse(result)
-        env = Faraday::Env.from(parsed)
-        Faraday::Response.new(env)
+        result = JSON.parse(result)
+
+        ::Faraday::Response.new(response_hash(result))
       end
 
       private
 
-      def log(type, *message)
-        logger&.send(type, message)
+      def response_hash(env)
+        hash = env.to_hash
+
+        {
+          status: (hash[:status] || hash['status']),
+          body: (hash[:body] || hash['body']),
+          response_headers: (hash[:response_headers] || hash['response_headers'])
+        }
       end
     end
   end
