@@ -13,7 +13,6 @@ module DriveInfo
 
   class << self
     attr_accessor :provider
-    attr_accessor :provider_options
     attr_reader :cache
     attr_reader :providers
     attr_reader :caches
