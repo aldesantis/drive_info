@@ -58,7 +58,6 @@ module DriveInfo
     def default_configuration
       {
         provider: nil,
-        provider_options: {},
         connection: buid_connection,
         cache: nil
       }
