@@ -35,10 +35,6 @@ RSpec.describe DriveInfo::Client do
     expect(subject.cache).to be_nil
   end
 
-  it 'returns empty provider options' do
-    expect(subject.provider_options).to be_empty
-  end
-
   it 'returns a faraday connection' do
     expect(subject.connection).to be_a(Faraday::Connection)
   end

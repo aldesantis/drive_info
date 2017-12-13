@@ -14,7 +14,6 @@ module DriveInfo
 
       DriveInfo.use_provider(config[:provider])
       DriveInfo.use_cache(config[:cache]) if config[:cache]
-      DriveInfo.provider_options = config[:provider_options]
       DriveInfo.connection = config[:connection]
     end
 
@@ -24,10 +23,6 @@ module DriveInfo
 
     def cache
       DriveInfo.cache
-    end
-
-    def provider_options
-      DriveInfo.provider_options || {}
     end
 
     def connection
@@ -48,15 +43,14 @@ module DriveInfo
       result = []
       connection.in_parallel do
         (args[:requests] || []).each do |r|
-          data = r.merge(provider_options)
-          result.push(request(sym, data))
+          result.push(request(sym, r))
         end
       end
       result.map(&:body)
     end
 
     def request(sym, args)
-      provider.send(sym, args.merge(provider_options))
+      provider.send(sym, args)
     end
 
     private
