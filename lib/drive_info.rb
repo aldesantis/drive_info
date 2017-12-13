@@ -1,49 +1,50 @@
 # frozen_string_literal: true
 
-require 'faraday'
-require 'redis'
-require 'logger'
-require 'faraday-encoding'
-require 'faraday_middleware'
 require 'drive_info/version'
-require 'drive_info/base'
-require 'drive_info/route_time'
-require 'drive_info/cache/redis'
-require 'drive_info/providers/base'
-require 'drive_info/providers/gmaps'
-require 'typhoeus'
-require 'typhoeus/adapters/faraday'
+require 'drive_info/client'
+require 'drive_info/response'
+require 'drive_info/apis/route_time'
 
-# Drive travel information library
-#
-# di = DriveInfo.new(provider: :gmaps, key: 'XXXX')
-# di.route_time(from: 'FROM ADDRESS', to: 'TO ADDRESS', starting_at: Time)
 module DriveInfo
+  class DriveInfoError < StandardError; end
+
+  @providers = {}
+  @caches = {}
+
   class << self
     attr_accessor :provider
     attr_accessor :provider_options
-    attr_accessor :cache
-    attr_accessor :debug
-
-    def new(options = {})
-      config = default_configuration.merge(options)
-      Base.new(config)
-    end
+    attr_reader :cache
+    attr_reader :providers
+    attr_reader :caches
+    attr_accessor :connection
 
     def configure
       yield self
       true
     end
 
-    private
+    def register_provider(name, mod)
+      @providers[name] = mod
+    end
 
-    def default_configuration
-      {
-        provider: provider || :gmaps,
-        provider_options: provider_options || {},
-        cache: cache,
-        debug: debug || false
-      }
+    def register_cache(name, mod)
+      @caches[name] = mod
+    end
+
+    def use_provider(name)
+      return false unless name
+      return fail DriveInfoError, "Provider #{name} does not exist" unless providers[name]
+      @provider = providers[name]
+    end
+
+    def use_cache(name)
+      return false unless name
+      return fail DriveInfoError, "Cache #{name} does not exist" unless caches[name]
+      @cache = caches[name]
     end
   end
 end
+
+require 'drive_info/providers/gmaps'
+require 'drive_info/cache/redis'
