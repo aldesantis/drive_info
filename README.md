@@ -1,5 +1,7 @@
 # DriveInfo
 
+[![CircleCI](https://circleci.com/gh/batteries911/drive_info.svg?style=svg&circle-token=5be5c6631df2c658ca9c1425b0ebc448741aee2d)](https://circleci.com/gh/batteries911/drive_info)
+
 DriveInfo allows you to get drive ETA between 2 locations.
 Its supports multiple providers and cache mechanism.
 
