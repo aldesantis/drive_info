@@ -1,8 +1,8 @@
 # DriveInfo
 
-[![CircleCI status](https://img.shields.io/circleci/token/74931af3113a5cd78f8c0a60c36f3feff76e88a5/project/github/batteries911/drive_info/develop.svg?style=flat-square)](https://circleci.com/gh/batteries911/drive_info)
-[![Codacy grade](https://img.shields.io/codacy/grade/871cbb52660d43c294dedcdf02113df4/develop.svg?style=flat-square)](https://www.codacy.com/app/Batteries911/drive_info/dashboard)
-[![Codacy coverage](https://img.shields.io/codacy/coverage/871cbb52660d43c294dedcdf02113df4/develop.svg?style=flat-square)](https://www.codacy.com/app/Batteries911/drive_info/dashboard)
+[![CircleCI status](https://img.shields.io/circleci/token/74931af3113a5cd78f8c0a60c36f3feff76e88a5/project/github/batteries911/drive_info/master.svg?style=flat-square)](https://circleci.com/gh/batteries911/drive_info)
+[![Codacy grade](https://img.shields.io/codacy/grade/871cbb52660d43c294dedcdf02113df4/master.svg?style=flat-square)](https://www.codacy.com/app/Batteries911/drive_info/dashboard)
+[![Codacy coverage](https://img.shields.io/codacy/coverage/871cbb52660d43c294dedcdf02113df4/master.svg?style=flat-square)](https://www.codacy.com/app/Batteries911/drive_info/dashboard)
 
 DriveInfo allows you to get drive ETA between 2 locations. 
 
