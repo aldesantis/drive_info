@@ -90,3 +90,6 @@ Layout/CaseIndentation:
 
 Metrics/BlockLength:
   Enabled: false
+
+RSpec/MessageSpies:
+  EnforcedStyle: receive

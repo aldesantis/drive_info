@@ -23,7 +23,7 @@ RSpec.describe DriveInfo::Providers::Gmaps do
       }
     end
 
-    context 'valid response' do
+    context 'when a valid response is returned' do
       let(:status) { 'OK' }
 
       it 'returns valid response' do
@@ -35,7 +35,7 @@ RSpec.describe DriveInfo::Providers::Gmaps do
       end
     end
 
-    context 'when not found' do
+    context 'when the NOT_FOUND status is returned' do
       let(:status) { 'NOT_FOUND' }
 
       it 'returns an error response' do
@@ -43,21 +43,27 @@ RSpec.describe DriveInfo::Providers::Gmaps do
       end
     end
 
-    context 'when other error' do
+    context 'when a generic error with no error message is returned' do
       let(:status) { 'UNKNOWN' }
 
       it 'returns an error response' do
         expect(subject.error).to be('UNKNOWN')
       end
+    end
 
-      context 'when error message is present' do
-        before do
-          response[:error_message] = 'test'
-        end
+    context 'when a generic error with an error message is returned' do
+      let(:status) { 'UNKNOWN' }
 
-        it 'returns the error message' do
-          expect(subject.error_message).to be('test')
-        end
+      before do
+        response[:error_message] = 'test'
+      end
+
+      it 'returns an error response' do
+        expect(subject.error).to be('UNKNOWN')
+      end
+
+      it 'returns the error message' do
+        expect(subject.error_message).to be('test')
       end
     end
   end
