@@ -178,7 +178,7 @@ Example
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/drive_info.
+Bug reports and pull requests are welcome on GitHub at https://github.com/batteries911/drive_info.
 
 ## License
 
