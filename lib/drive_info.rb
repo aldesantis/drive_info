@@ -34,7 +34,18 @@ module DriveInfo
     def use_provider(name)
       return false unless name
       return fail DriveInfoError, "Provider #{name} does not exist" unless providers[name]
-      @provider = providers[name]
+
+      if block_given?
+        old_provider = @provider
+        begin
+          @provider = providers[name]
+          yield
+        ensure
+          @provider = old_provider
+        end
+      else
+        @provider = providers[name]
+      end
     end
 
     def use_cache(name)
