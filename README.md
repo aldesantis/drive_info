@@ -1,6 +1,6 @@
 # DriveInfo
 
-[![CircleCI status](https://img.shields.io/circleci/token/5be5c6631df2c658ca9c1425b0ebc448741aee2d/project/github/batteries911/drive_info/develop.svg?style=flat-square)](https://circleci.com/gh/batteries911/drive_info)
+[![CircleCI status](https://img.shields.io/circleci/token/74931af3113a5cd78f8c0a60c36f3feff76e88a5/project/github/batteries911/drive_info/develop.svg?style=flat-square)](https://circleci.com/gh/batteries911/drive_info)
 [![Codacy grade](https://img.shields.io/codacy/grade/871cbb52660d43c294dedcdf02113df4/develop.svg?style=flat-square)](https://www.codacy.com/app/Batteries911/drive_info/dashboard)
 [![Codacy coverage](https://img.shields.io/codacy/coverage/871cbb52660d43c294dedcdf02113df4/develop.svg?style=flat-square)](https://www.codacy.com/app/Batteries911/drive_info/dashboard)
 
