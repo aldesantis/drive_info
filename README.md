@@ -1,9 +1,11 @@
 # DriveInfo
 
 [![CircleCI](https://circleci.com/gh/batteries911/drive_info.svg?style=svg&circle-token=5be5c6631df2c658ca9c1425b0ebc448741aee2d)](https://circleci.com/gh/batteries911/drive_info)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/871cbb52660d43c294dedcdf02113df4)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=batteries911/drive_info&amp;utm_campaign=Badge_Grade)
 
-DriveInfo allows you to get drive ETA between 2 locations.
-Its supports multiple providers and cache mechanism.
+DriveInfo allows you to get drive ETA between 2 locations. 
+
+It supports multiple providers and cache mechanism.
 
 ## Installation
 
