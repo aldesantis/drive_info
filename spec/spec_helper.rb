@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+
+require 'codacy-coverage'
+
+Codacy::Reporter.start
+
 require 'drive_info'
 require 'timecop'
 
