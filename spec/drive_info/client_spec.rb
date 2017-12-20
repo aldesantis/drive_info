@@ -15,7 +15,7 @@ RSpec.describe DriveInfo::Client do
         DriveInfo.connection.get('http://google.pt')
       end
 
-      def parse(_, r)
+      def parse(_, _r)
         nil
       end
     end
