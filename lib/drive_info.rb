@@ -57,4 +57,5 @@ module DriveInfo
 end
 
 require 'drive_info/providers/gmaps'
+require 'drive_info/providers/here'
 require 'drive_info/cache/redis'
