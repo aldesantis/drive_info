@@ -175,6 +175,7 @@ Example
 ## Todos
 
 - [ ] Better tests on parallel requests when requests fails
+- [ ] Improve version constraints on dependencies in gemspec
 
 ## Contributing
 
