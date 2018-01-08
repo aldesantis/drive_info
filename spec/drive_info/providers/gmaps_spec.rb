@@ -13,7 +13,7 @@ RSpec.describe DriveInfo::Providers::Gmaps do
           {
             legs: [
               {
-                duration: {
+                duration_in_traffic: {
                   value: 1
                 }
               }
