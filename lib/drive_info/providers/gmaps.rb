@@ -37,7 +37,7 @@ module DriveInfo
       def parse_route_time(response)
         case response.fetch(:status)
         when 'OK'
-          value = response.dig(:routes, 0, :legs, 0, :duration, :value).to_i
+          value = response.dig(:routes, 0, :legs, 0, :duration_in_traffic, :value).to_i
           DriveInfo::Response.new(value)
         when 'NOT_FOUND'
           DriveInfo::Response.new(nil, error: 'NOT_FOUND')
