@@ -27,7 +27,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.0.1]
 
-Maintenance release.
+### Added
+
+- Added support for block syntax of `use_provider`
+- Added support for Here maps
+
+### Removed
+
+- Removed unused `provider_options`
 
 ## [1.0.0]
 
