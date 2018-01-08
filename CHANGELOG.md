@@ -21,11 +21,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.0.2]
 
-First tagged release.
-
 ### Fixed
 
-- Fixed Google Directions API adapter returning `duration` instead of `duration_in_traffic` 
+- Fixed Google Directions API adapter returning `duration` instead of `duration_in_traffic`
+
+## [1.0.1]
+
+Maintenance release.
+
+## [1.0.0]
+
+First stable release.  
 
 [Unreleased]: https://github.com/batteries911/drive_info/compare/v1.0.2...HEAD
-[1.0.2]: https://github.com/batteries911/drive_info/tree/v1.0.2
+[1.0.2]: https://github.com/batteries911/drive_info/compare/v1.0.1...v1.0.2
+[1.0.1]: https://github.com/batteries911/drive_info/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/batteries911/drive_info/tree/v1.0.0
