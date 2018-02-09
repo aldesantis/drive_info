@@ -19,7 +19,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Security
 
-## [1.0.3]
+## [1.0.5]
+
+### Fixed
+
+- Fixed acessing error message when unknow error happens
+
+## [1.0.4]
 
 ### Added
 
@@ -46,7 +52,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 First stable release.
 
-[Unreleased]: https://github.com/batteries911/drive_info/compare/v1.0.3...HEAD
+[Unreleased]: https://github.com/batteries911/drive_info/compare/v1.0.5...HEAD
+[1.0.5]: https://github.com/batteries911/drive_info/compare/v1.0.4...v1.0.5
+[1.0.4]: https://github.com/batteries911/drive_info/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/batteries911/drive_info/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/batteries911/drive_info/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/batteries911/drive_info/compare/v1.0.0...v1.0.1

@@ -44,8 +44,7 @@ module DriveInfo
         when 'NOT_FOUND'
           DriveInfo::Response.new(nil, error: 'NOT_FOUND')
         else
-          error = response.fetch(:error_message, response.fetch(:status, nil))
-          DriveInfo::Response.new(nil, error: 'UNKNOWN', error_message: error)
+          DriveInfo::Response.new(nil, error: 'UNKNOWN')
         end
       end
     end

@@ -54,16 +54,8 @@ RSpec.describe DriveInfo::Providers::Gmaps do
     context 'when a generic error with an error message is returned' do
       let(:status) { 'UNKNOWN' }
 
-      before do
-        response[:error_message] = 'test'
-      end
-
       it 'returns an error response' do
         expect(subject.error).to be('UNKNOWN')
-      end
-
-      it 'returns the error message' do
-        expect(subject.error_message).to be('test')
       end
     end
   end
