@@ -18,12 +18,14 @@ module DriveInfo
       end
 
       def parse(method, response)
-        case method.to_sym
+        obj = case method.to_sym
         when :route_time
           parse_route_time(response)
         else
           fail "Invalid method for parsing #{method}"
         end
+        obj.raw = response
+        obj
       end
 
       private
@@ -35,14 +37,14 @@ module DriveInfo
       end
 
       def parse_route_time(response)
-        case response.fetch(:status)
+        case response.fetch(:status, nil)
         when 'OK'
           value = response.dig(:routes, 0, :legs, 0, :duration_in_traffic, :value).to_i
           DriveInfo::Response.new(value)
         when 'NOT_FOUND'
           DriveInfo::Response.new(nil, error: 'NOT_FOUND')
         else
-          error = response.fetch(:error_message, response.fetch(:status))
+          error = response.fetch(:error_message, response.fetch(:status, nil))
           DriveInfo::Response.new(nil, error: 'UNKNOWN', error_message: error)
         end
       end
